@@ -1,0 +1,1535 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>SG Eco-Explorer: Sustainability Trail & STEM Lab</title>
+    <!-- Tailwind CSS for Responsive Styling -->
+    <script src="https://cdn.tailwindcss.com"></script>
+    <!-- FontAwesome Icons -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <!-- Google Fonts: Inter & Outfit -->
+    <link href="https://fonts.googleapis.com/css2?family=Outfit:wght@400;600;700;800&family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
+    <script>
+        tailwind.config = {
+            theme: {
+                extend: {
+                    colors: {
+                        sgGreen: {
+                            50: '#f0fdf4',
+                            100: '#dcfce7',
+                            500: '#22c55e',
+                            600: '#16a34a',
+                            700: '#15803d',
+                            800: '#166534',
+                        },
+                        sgBlue: {
+                            500: '#0ea5e9',
+                            600: '#0284c7',
+                        }
+                    },
+                    fontFamily: {
+                        outfit: ['Outfit', 'sans-serif'],
+                        sans: ['Inter', 'sans-serif']
+                    }
+                }
+            }
+        }
+    </script>
+    <style>
+        body { font-family: 'Inter', sans-serif; background-color: #f8fafc; color: #1e293b; }
+        h1, h2, h3, .font-outfit { font-family: 'Outfit', sans-serif; }
+        .glass-panel { background: rgba(255, 255, 255, 0.9); backdrop-filter: blur(10px); border: 1px solid rgba(226, 232, 240, 0.8); }
+        .badge-pulse { animation: pulse 2s cubic-bezier(0.4, 0, 0.6, 1) infinite; }
+        @keyframes pulse { 0%, 100% { transform: scale(1); } 50% { transform: scale(1.05); } }
+        canvas { touch-action: none; }
+    </style>
+</head>
+<body class="min-h-screen flex flex-col justify-between bg-slate-50 text-slate-800 antialiased selection:bg-emerald-200">
+
+    <!-- TOP HEADER -->
+    <header class="sticky top-0 z-40 bg-emerald-700 text-white shadow-md border-b border-emerald-800">
+        <div class="max-w-6xl mx-auto px-4 py-3 flex items-center justify-between">
+            <div class="flex items-center space-x-3">
+                <div class="bg-white text-emerald-700 p-2 rounded-2xl shadow-inner font-bold text-xl">
+                    <i class="fa-solid fa-leaf text-emerald-600"></i>
+                </div>
+                <div>
+                    <h1 class="text-lg md:text-xl font-extrabold tracking-tight leading-none font-outfit">SG Eco-Explorer</h1>
+                    <p class="text-xs text-emerald-100 font-medium">MOE Environmental Science Club STEM Trail</p>
+                </div>
+            </div>
+
+            <!-- Trail Progress Summary -->
+            <div class="flex items-center space-x-3 bg-emerald-800/80 px-3 py-1.5 rounded-full border border-emerald-600/50">
+                <i class="fa-solid fa-award text-yellow-300 text-lg"></i>
+                <span class="text-xs md:text-sm font-semibold"><span id="badges-count">0</span> / 5 Badges</span>
+                <button onclick="openModal('badge-modal')" class="text-xs bg-yellow-400 hover:bg-yellow-300 text-emerald-950 font-bold px-2.5 py-1 rounded-full transition shadow">
+                    Passport
+                </button>
+            </div>
+        </div>
+    </header>
+
+    <!-- MAIN CONTENT CONTAINER -->
+    <main class="max-w-6xl mx-auto px-4 py-6 w-full flex-grow">
+        
+        <!-- 5 PILLARS OF SINGAPORE GREEN PLAN BANNER -->
+        <section class="mb-6 bg-gradient-to-r from-emerald-600 to-teal-700 text-white rounded-3xl p-5 shadow-lg relative overflow-hidden">
+            <div class="absolute -right-10 -bottom-10 opacity-10 text-9xl pointer-events-none">
+                <i class="fa-solid fa-globe"></i>
+            </div>
+            <div class="relative z-10">
+                <div class="flex flex-wrap items-center justify-between gap-2 mb-3">
+                    <span class="bg-emerald-900/60 text-emerald-200 text-xs font-bold px-3 py-1 rounded-full uppercase tracking-wider border border-emerald-500/30">
+                        Singapore Green Plan 2030 Aligned
+                    </span>
+                    <span class="text-xs text-emerald-100"><i class="fa-solid fa-wifi mr-1"></i> Interactive Online & Offline STEM Trail</span>
+                </div>
+                <h2 class="text-xl md:text-2xl font-bold mb-2 font-outfit">5 Pillars of Singapore Green Plan 2030</h2>
+                <p class="text-xs md:text-sm text-emerald-100 max-w-3xl leading-relaxed">
+                    Welcome Eco-Champions! Explore your school's green stations, solve real-world STEM challenges, and complete interactive simulations to earn your 5 Sustainability Badges.
+                </p>
+                
+                <!-- 5 Pillars Icons Ribbon -->
+                <div class="grid grid-cols-5 gap-2 mt-4 text-center">
+                    <div class="bg-white/10 backdrop-blur-sm p-2 rounded-xl border border-white/10 hover:bg-white/20 transition">
+                        <i class="fa-solid fa-tree text-emerald-300 text-lg mb-1 block"></i>
+                        <span class="text-[10px] md:text-xs font-semibold block leading-tight">1. City in Nature</span>
+                    </div>
+                    <div class="bg-white/10 backdrop-blur-sm p-2 rounded-xl border border-white/10 hover:bg-white/20 transition">
+                        <i class="fa-solid fa-bolt text-yellow-300 text-lg mb-1 block"></i>
+                        <span class="text-[10px] md:text-xs font-semibold block leading-tight">2. Energy Reset</span>
+                    </div>
+                    <div class="bg-white/10 backdrop-blur-sm p-2 rounded-xl border border-white/10 hover:bg-white/20 transition">
+                        <i class="fa-solid fa-recycle text-amber-300 text-lg mb-1 block"></i>
+                        <span class="text-[10px] md:text-xs font-semibold block leading-tight">3. Sustainable Living</span>
+                    </div>
+                    <div class="bg-white/10 backdrop-blur-sm p-2 rounded-xl border border-white/10 hover:bg-white/20 transition">
+                        <i class="fa-solid fa-chart-line text-purple-300 text-lg mb-1 block"></i>
+                        <span class="text-[10px] md:text-xs font-semibold block leading-tight">4. Green Economy</span>
+                    </div>
+                    <div class="bg-white/10 backdrop-blur-sm p-2 rounded-xl border border-white/10 hover:bg-white/20 transition">
+                        <i class="fa-solid fa-shield-halved text-sky-300 text-lg mb-1 block"></i>
+                        <span class="text-[10px] md:text-xs font-semibold block leading-tight">5. Resilient Future</span>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- TRAIL STATION NAVIGATION TABS -->
+        <div class="grid grid-cols-2 sm:grid-cols-3 lg:grid-cols-5 gap-2.5 mb-6">
+            <!-- Station 1 Button -->
+            <button onclick="switchStation('ecogarden')" id="tab-ecogarden" class="station-tab active-tab bg-white p-3 rounded-2xl shadow-sm border-2 border-emerald-500 text-left hover:shadow-md transition group">
+                <div class="flex items-center justify-between mb-1">
+                    <span class="w-7 h-7 rounded-full bg-emerald-100 text-emerald-700 flex items-center justify-center font-bold text-xs group-hover:scale-110 transition">1</span>
+                    <span id="badge-icon-ecogarden" class="text-[10px] bg-slate-100 text-slate-400 px-1.5 py-0.5 rounded-full font-bold">Locked</span>
+                </div>
+                <h3 class="font-bold text-slate-800 text-xs md:text-sm font-outfit">School Eco-Garden</h3>
+                <p class="text-[10px] text-slate-500 truncate">Biodiversity • City in Nature</p>
+            </button>
+
+            <!-- Station 2 Button -->
+            <button onclick="switchStation('hydroponics')" id="tab-hydroponics" class="station-tab bg-white p-3 rounded-2xl shadow-sm border-2 border-transparent hover:border-slate-300 text-left hover:shadow-md transition group">
+                <div class="flex items-center justify-between mb-1">
+                    <span class="w-7 h-7 rounded-full bg-purple-100 text-purple-700 flex items-center justify-center font-bold text-xs group-hover:scale-110 transition">2</span>
+                    <span id="badge-icon-hydroponics" class="text-[10px] bg-slate-100 text-slate-400 px-1.5 py-0.5 rounded-full font-bold">Locked</span>
+                </div>
+                <h3 class="font-bold text-slate-800 text-xs md:text-sm font-outfit">Hydroponics Lab</h3>
+                <p class="text-[10px] text-slate-500 truncate">Food Security • Agri-Tech</p>
+            </button>
+
+            <!-- Station 3 Button -->
+            <button onclick="switchStation('canteen')" id="tab-canteen" class="station-tab bg-white p-3 rounded-2xl shadow-sm border-2 border-transparent hover:border-slate-300 text-left hover:shadow-md transition group">
+                <div class="flex items-center justify-between mb-1">
+                    <span class="w-7 h-7 rounded-full bg-amber-100 text-amber-700 flex items-center justify-center font-bold text-xs group-hover:scale-110 transition">3</span>
+                    <span id="badge-icon-canteen" class="text-[10px] bg-slate-100 text-slate-400 px-1.5 py-0.5 rounded-full font-bold">Locked</span>
+                </div>
+                <h3 class="font-bold text-slate-800 text-xs md:text-sm font-outfit">School Canteen</h3>
+                <p class="text-[10px] text-slate-500 truncate">Food Waste • Zero Waste</p>
+            </button>
+
+            <!-- Station 4 Button -->
+            <button onclick="switchStation('rainwater')" id="tab-rainwater" class="station-tab bg-white p-3 rounded-2xl shadow-sm border-2 border-transparent hover:border-slate-300 text-left hover:shadow-md transition group">
+                <div class="flex items-center justify-between mb-1">
+                    <span class="w-7 h-7 rounded-full bg-sky-100 text-sky-700 flex items-center justify-center font-bold text-xs group-hover:scale-110 transition">4</span>
+                    <span id="badge-icon-rainwater" class="text-[10px] bg-slate-100 text-slate-400 px-1.5 py-0.5 rounded-full font-bold">Locked</span>
+                </div>
+                <h3 class="font-bold text-slate-800 text-xs md:text-sm font-outfit">Rainwater Harvest</h3>
+                <p class="text-[10px] text-slate-500 truncate">Water Security • Filtration</p>
+            </button>
+
+            <!-- Station 5 Button -->
+            <button onclick="switchStation('energy')" id="tab-energy" class="station-tab bg-white p-3 rounded-2xl shadow-sm border-2 border-transparent hover:border-slate-300 text-left hover:shadow-md transition group">
+                <div class="flex items-center justify-between mb-1">
+                    <span class="w-7 h-7 rounded-full bg-yellow-100 text-yellow-700 flex items-center justify-center font-bold text-xs group-hover:scale-110 transition">5</span>
+                    <span id="badge-icon-energy" class="text-[10px] bg-slate-100 text-slate-400 px-1.5 py-0.5 rounded-full font-bold">Locked</span>
+                </div>
+                <h3 class="font-bold text-slate-800 text-xs md:text-sm font-outfit">Classroom & Toilets</h3>
+                <p class="text-[10px] text-slate-500 truncate">Energy Reset • Savings</p>
+            </button>
+        </div>
+
+        <!-- ================= STATION 1: ECO-GARDEN (BIODIVERSITY) ================= -->
+        <section id="station-ecogarden" class="station-content block">
+            <div class="bg-white rounded-3xl shadow-md border border-slate-200 overflow-hidden">
+                <div class="bg-gradient-to-r from-emerald-600 to-teal-700 text-white p-6">
+                    <div class="flex items-center justify-between">
+                        <div>
+                            <span class="bg-emerald-900/60 text-emerald-200 text-xs font-bold px-3 py-1 rounded-full uppercase">Pillar 1: City in Nature • Biodiversity</span>
+                            <h2 class="text-2xl font-extrabold font-outfit mt-1">Station 1: School Eco-Garden Food Web Lab</h2>
+                        </div>
+                        <i class="fa-solid fa-bug text-4xl text-emerald-200 opacity-80"></i>
+                    </div>
+                    <p class="text-xs md:text-sm text-emerald-100 mt-2">
+                        Singapore is a "City in Nature". Our school eco-garden supports native pollinators like Olive-backed Sunbirds, Carpenter Bees, and Lime Butterflies!
+                    </p>
+                </div>
+
+                <div class="flex border-b border-slate-200 bg-slate-50">
+                    <button onclick="switchSubTab('ecogarden', 'sim')" id="subtab-ecogarden-sim" class="subtab-btn active-subtab flex-1 py-3 text-center text-sm font-bold text-emerald-700 border-b-2 border-emerald-600 bg-white">
+                        <i class="fa-solid fa-diagram-project mr-1.5"></i> Interactive Ecosystem Balance Simulation
+                    </button>
+                    <button onclick="switchSubTab('ecogarden', 'offline')" id="subtab-ecogarden-offline" class="subtab-btn flex-1 py-3 text-center text-sm font-bold text-slate-600 hover:text-emerald-700">
+                        <i class="fa-solid fa-magnifying-glass mr-1.5"></i> Offline Garden Bio-Blitz Quadrat Survey
+                    </button>
+                </div>
+
+                <div class="p-6">
+                    <!-- SUBTAB 1: SIMULATION -->
+                    <div id="ecogarden-sim-view">
+                        <div class="grid grid-cols-1 lg:grid-cols-12 gap-6">
+                            <!-- Species Population Controls -->
+                            <div class="lg:col-span-5 bg-emerald-50/60 p-5 rounded-2xl border border-emerald-200 flex flex-col justify-between">
+                                <div>
+                                    <h3 class="font-bold text-slate-800 text-base mb-1 font-outfit flex items-center">
+                                        <i class="fa-solid fa-sliders text-emerald-600 mr-2"></i> Ecosystem Population Mix
+                                    </h3>
+                                    <p class="text-xs text-slate-600 mb-4">Balance native flowering host plants, caterpillars/butterflies, and natural bird predators.</p>
+
+                                    <!-- Slider 1: Host Plants -->
+                                    <div class="mb-4">
+                                        <div class="flex justify-between text-xs font-semibold text-slate-700 mb-1">
+                                            <span>Host Plants (Butterfly Pea / Ixora)</span>
+                                            <span id="val-plants" class="font-mono text-emerald-700">60</span>
+                                        </div>
+                                        <input type="range" id="input-plants" min="10" max="100" value="60" oninput="updateGardenSim()" class="w-full accent-emerald-600">
+                                    </div>
+
+                                    <!-- Slider 2: Butterfly/Pollinator Pop -->
+                                    <div class="mb-4">
+                                        <div class="flex justify-between text-xs font-semibold text-slate-700 mb-1">
+                                            <span>Butterflies & Bees (Herbivores/Pollinators)</span>
+                                            <span id="val-pollination" class="font-mono text-amber-700">40</span>
+                                        </div>
+                                        <input type="range" id="input-pollination" min="5" max="80" value="40" oninput="updateGardenSim()" class="w-full accent-amber-500">
+                                    </div>
+
+                                    <!-- Slider 3: Birds/Predators -->
+                                    <div class="mb-4">
+                                        <div class="flex justify-between text-xs font-semibold text-slate-700 mb-1">
+                                            <span>Sunbirds & Garden Lizards (Predators)</span>
+                                            <span id="val-predators" class="font-mono text-sky-700">15</span>
+                                        </div>
+                                        <input type="range" id="input-predators" min="2" max="40" value="15" oninput="updateGardenSim()" class="w-full accent-sky-600">
+                                    </div>
+                                </div>
+
+                                <button onclick="checkGardenBalance()" class="w-full py-3 bg-emerald-600 hover:bg-emerald-700 text-white font-bold text-sm rounded-xl shadow-md transition flex items-center justify-center space-x-2">
+                                    <i class="fa-solid fa-scale-balanced"></i>
+                                    <span>Verify Ecosystem Equilibrium</span>
+                                </button>
+                            </div>
+
+                            <!-- Ecosystem Graphic Monitor -->
+                            <div class="lg:col-span-7 bg-slate-900 text-white p-5 rounded-2xl flex flex-col justify-between">
+                                <div>
+                                    <div class="flex justify-between items-center border-b border-slate-700 pb-3 mb-4">
+                                        <span class="text-xs font-bold uppercase text-emerald-400 tracking-wider">Biodiversity Index Monitor</span>
+                                        <span id="garden-status-tag" class="text-xs bg-emerald-900 text-emerald-300 px-2.5 py-1 rounded-full font-mono">Biodiversity Index: High</span>
+                                    </div>
+
+                                    <div class="grid grid-cols-3 gap-3 mb-4 text-center">
+                                        <div class="bg-slate-800 p-3 rounded-xl border border-slate-700">
+                                            <span class="text-[10px] text-slate-400 uppercase font-semibold block">Pollination Rate</span>
+                                            <span id="gauge-pollination" class="text-xl font-bold font-mono text-amber-400">88 %</span>
+                                        </div>
+                                        <div class="bg-slate-800 p-3 rounded-xl border border-slate-700">
+                                            <span class="text-[10px] text-slate-400 uppercase font-semibold block">Food Balance</span>
+                                            <span id="gauge-foodbalance" class="text-xl font-bold font-mono text-emerald-400">Stable</span>
+                                        </div>
+                                        <div class="bg-slate-800 p-3 rounded-xl border border-slate-700">
+                                            <span class="text-[10px] text-slate-400 uppercase font-semibold block">Species Richness</span>
+                                            <span id="gauge-richness" class="text-xl font-bold font-mono text-sky-400">High</span>
+                                        </div>
+                                    </div>
+
+                                    <div class="relative bg-slate-950 rounded-xl h-44 border border-slate-800 overflow-hidden flex items-center justify-center p-2">
+                                        <canvas id="gardenCanvas" width="380" height="160" class="w-full h-full"></canvas>
+                                    </div>
+                                </div>
+
+                                <div id="garden-feedback" class="mt-4 p-3 rounded-xl text-xs bg-slate-800 border border-slate-700 text-slate-200">
+                                    <i class="fa-solid fa-circle-info text-emerald-400 mr-1.5"></i>
+                                    <span>Maintain sufficient host plants so caterpillars don't run out of food while allowing sunbirds to keep populations in natural check!</span>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- SUBTAB 2: OFFLINE HANDS-ON GUIDE -->
+                    <div id="ecogarden-offline-view" class="hidden">
+                        <div class="bg-emerald-50/50 p-5 rounded-2xl border border-emerald-200 mb-4">
+                            <h3 class="text-lg font-bold text-emerald-900 font-outfit mb-2"><i class="fa-solid fa-bug mr-2"></i> Hands-on Activity: School Eco-Garden Bio-Blitz Quadrat Survey</h3>
+                            <p class="text-xs md:text-sm text-slate-700 leading-relaxed mb-4">
+                                Conduct a real species inventory using a 1-metre quadrat frame in your school eco-garden.
+                            </p>
+
+                            <div class="grid grid-cols-1 md:grid-cols-3 gap-4 mb-4">
+                                <div class="bg-white p-4 rounded-xl border border-emerald-200 shadow-sm">
+                                    <div class="font-bold text-emerald-700 text-sm mb-1">Step 1: Quadrat Sampling</div>
+                                    <p class="text-xs text-slate-600">Place a 1m x 1m PVC pipe square randomly over a grassy or garden patch.</p>
+                                </div>
+                                <div class="bg-white p-4 rounded-xl border border-emerald-200 shadow-sm">
+                                    <div class="font-bold text-emerald-700 text-sm mb-1">Step 2: Species Inventory</div>
+                                    <p class="text-xs text-slate-600">Count and identify macroinvertebrates (ants, earthworms, ladybirds, snails) using a magnifying lens.</p>
+                                </div>
+                                <div class="bg-white p-4 rounded-xl border border-emerald-200 shadow-sm">
+                                    <div class="font-bold text-emerald-700 text-sm mb-1">Step 3: Diversity Index</div>
+                                    <p class="text-xs text-slate-600">Calculate Total Organisms divided by Total Species Types to determine plot health!</p>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- ================= STATION 2: HYDROPONICS (FOOD SUSTAINABILITY) ================= -->
+        <section id="station-hydroponics" class="station-content hidden">
+            <div class="bg-white rounded-3xl shadow-md border border-slate-200 overflow-hidden">
+                <div class="bg-gradient-to-r from-purple-600 to-indigo-700 text-white p-6">
+                    <div class="flex items-center justify-between">
+                        <div>
+                            <span class="bg-purple-800/60 text-purple-200 text-xs font-bold px-3 py-1 rounded-full uppercase">Pillar 4: Green Economy & Resilient Future • Food Security</span>
+                            <h2 class="text-2xl font-extrabold font-outfit mt-1">Station 2: Smart Hydroponics Eco-Lab</h2>
+                        </div>
+                        <i class="fa-solid fa-seedling text-4xl text-purple-200 opacity-80"></i>
+                    </div>
+                    <p class="text-xs md:text-sm text-purple-100 mt-2">
+                        Singapore aims to produce 30% of our nutritional needs locally by 2030 ("30 by 30"). Hydroponics uses 90% less water than traditional soil farming!
+                    </p>
+                </div>
+
+                <div class="flex border-b border-slate-200 bg-slate-50">
+                    <button onclick="switchSubTab('hydroponics', 'sim')" id="subtab-hydroponics-sim" class="subtab-btn active-subtab flex-1 py-3 text-center text-sm font-bold text-purple-700 border-b-2 border-purple-600 bg-white">
+                        <i class="fa-solid fa-laptop-code mr-1.5"></i> Interactive NFT Hydroponics Sim
+                    </button>
+                    <button onclick="switchSubTab('hydroponics', 'offline')" id="subtab-hydroponics-offline" class="subtab-btn flex-1 py-3 text-center text-sm font-bold text-slate-600 hover:text-purple-700">
+                        <i class="fa-solid fa-bottle-water mr-1.5"></i> Offline Kratky Jar Hydroponics Guide
+                    </button>
+                </div>
+
+                <div class="p-6">
+                    <!-- SUBTAB 1: SIMULATION -->
+                    <div id="hydroponics-sim-view">
+                        <div class="grid grid-cols-1 lg:grid-cols-12 gap-6">
+                            <!-- Hydroponic Nutrient & Light Controls -->
+                            <div class="lg:col-span-5 bg-purple-50/60 p-5 rounded-2xl border border-purple-200 flex flex-col justify-between">
+                                <div>
+                                    <h3 class="font-bold text-slate-800 text-base mb-1 font-outfit flex items-center">
+                                        <i class="fa-solid fa-gears text-purple-600 mr-2"></i> Environment Controller
+                                    </h3>
+                                    <p class="text-xs text-slate-600 mb-4">Set the optimal Electrical Conductivity (EC), pH, and LED spectrum to grow healthy Pak Choy greens.</p>
+
+                                    <!-- Slider 1: Nutrient EC Level -->
+                                    <div class="mb-4">
+                                        <div class="flex justify-between text-xs font-semibold text-slate-700 mb-1">
+                                            <span>Nutrient Solution EC (mS/cm)</span>
+                                            <span id="val-ec" class="font-mono text-purple-700">1.8</span>
+                                        </div>
+                                        <input type="range" id="input-ec" min="0.5" max="3.5" step="0.1" value="1.8" oninput="updateHydroSim()" class="w-full accent-purple-600">
+                                    </div>
+
+                                    <!-- Slider 2: Solution pH Level -->
+                                    <div class="mb-4">
+                                        <div class="flex justify-between text-xs font-semibold text-slate-700 mb-1">
+                                            <span>Water pH Level</span>
+                                            <span id="val-ph" class="font-mono text-purple-700">6.0</span>
+                                        </div>
+                                        <input type="range" id="input-ph" min="4.0" max="9.0" step="0.1" value="6.0" oninput="updateHydroSim()" class="w-full accent-indigo-600">
+                                    </div>
+
+                                    <!-- Spectrum Selector -->
+                                    <div class="mb-4">
+                                        <span class="text-xs font-semibold text-slate-700 block mb-1">LED Grow Light Spectrum</span>
+                                        <div class="grid grid-cols-3 gap-2">
+                                            <button onclick="setSpectrum('red', event)" id="btn-spec-red" class="spec-btn py-1.5 text-xs font-bold rounded-lg border border-red-300 bg-white text-red-600">Red (Bloom)</button>
+                                            <button onclick="setSpectrum('blue', event)" id="btn-spec-blue" class="spec-btn active-spec py-1.5 text-xs font-bold rounded-lg border border-purple-500 bg-purple-600 text-white">Red+Blue (Veg)</button>
+                                            <button onclick="setSpectrum('green', event)" id="btn-spec-green" class="spec-btn py-1.5 text-xs font-bold rounded-lg border border-green-300 bg-white text-green-600">Green Only</button>
+                                        </div>
+                                    </div>
+                                </div>
+
+                                <button onclick="runHydroHarvest()" class="w-full py-3 bg-purple-600 hover:bg-purple-700 text-white font-bold text-sm rounded-xl shadow-md transition flex items-center justify-center space-x-2">
+                                    <i class="fa-solid fa-leaf"></i>
+                                    <span>Grow Crop (14 Days Simulation)</span>
+                                </button>
+                            </div>
+
+                            <!-- Live Plant Canvas Monitor -->
+                            <div class="lg:col-span-7 bg-slate-900 text-white p-5 rounded-2xl flex flex-col justify-between">
+                                <div>
+                                    <div class="flex justify-between items-center border-b border-slate-700 pb-3 mb-4">
+                                        <span class="text-xs font-bold uppercase text-purple-400 tracking-wider">Growth & Yield Analytics</span>
+                                        <span id="hydro-health-tag" class="text-xs bg-emerald-900 text-emerald-300 px-2.5 py-1 rounded-full font-mono">Plant Health: 100%</span>
+                                    </div>
+
+                                    <div class="grid grid-cols-3 gap-3 mb-4 text-center">
+                                        <div class="bg-slate-800 p-3 rounded-xl border border-slate-700">
+                                            <span class="text-[10px] text-slate-400 uppercase font-semibold block">Photosynthesis</span>
+                                            <span id="gauge-photosynthesis" class="text-xl font-bold font-mono text-purple-400">95 %</span>
+                                        </div>
+                                        <div class="bg-slate-800 p-3 rounded-xl border border-slate-700">
+                                            <span class="text-[10px] text-slate-400 uppercase font-semibold block">Nutrient Uptake</span>
+                                            <span id="gauge-uptake" class="text-xl font-bold font-mono text-emerald-400">Optimal</span>
+                                        </div>
+                                        <div class="bg-slate-800 p-3 rounded-xl border border-slate-700">
+                                            <span class="text-[10px] text-slate-400 uppercase font-semibold block">Est. Yield</span>
+                                            <span id="gauge-yield" class="text-xl font-bold font-mono text-amber-400">450 g</span>
+                                        </div>
+                                    </div>
+
+                                    <div class="relative bg-slate-950 rounded-xl h-44 border border-slate-800 overflow-hidden flex items-center justify-center p-2">
+                                        <canvas id="hydroCanvas" width="380" height="160" class="w-full h-full"></canvas>
+                                    </div>
+                                </div>
+
+                                <div id="hydroponics-feedback" class="mt-4 p-3 rounded-xl text-xs bg-slate-800 border border-slate-700 text-slate-200">
+                                    <i class="fa-solid fa-circle-info text-purple-400 mr-1.5"></i>
+                                    <span>Keep EC between 1.4 - 2.2 mS/cm and pH between 5.8 - 6.5 for leafy greens to prevent nutrient lock-out!</span>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- SUBTAB 2: OFFLINE HANDS-ON GUIDE -->
+                    <div id="hydroponics-offline-view" class="hidden">
+                        <div class="bg-purple-50/50 p-5 rounded-2xl border border-purple-200 mb-4">
+                            <h3 class="text-lg font-bold text-purple-900 font-outfit mb-2"><i class="fa-solid fa-plant-wilt mr-2"></i> Hands-on Activity: Upcycled Kratky Hydroponic Jar</h3>
+                            <p class="text-xs md:text-sm text-slate-700 leading-relaxed mb-4">
+                                Build a passive non-electric Kratky hydroponic unit using household plastic bottles!
+                            </p>
+
+                            <div class="grid grid-cols-1 md:grid-cols-3 gap-4 mb-4">
+                                <div class="bg-white p-4 rounded-xl border border-purple-200 shadow-sm">
+                                    <div class="font-bold text-purple-700 text-sm mb-1">Step 1: Container Setup</div>
+                                    <p class="text-xs text-slate-600">Cut a 1.5L bottle in half. Invert top funnel into bottom reservoir. Fill net pot with clay pebbles or sponge.</p>
+                                </div>
+                                <div class="bg-white p-4 rounded-xl border border-purple-200 shadow-sm">
+                                    <div class="font-bold text-purple-700 text-sm mb-1">Step 2: Hydro Solution</div>
+                                    <p class="text-xs text-slate-600">Mix hydroponic MasterBlend / A+B fertilizer into water until EC reaches ~1.6 mS/cm. Maintain an air gap below net cup!</p>
+                                </div>
+                                <div class="bg-white p-4 rounded-xl border border-purple-200 shadow-sm">
+                                    <div class="font-bold text-purple-700 text-sm mb-1">Step 3: Observation Log</div>
+                                    <p class="text-xs text-slate-600">Track daily root length growth (cm) and leaf count over 3 weeks in your club science journal.</p>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- ================= STATION 3: CANTEEN (FOOD SUSTAINABILITY) ================= -->
+        <section id="station-canteen" class="station-content hidden">
+            <div class="bg-white rounded-3xl shadow-md border border-slate-200 overflow-hidden">
+                <div class="bg-gradient-to-r from-amber-500 to-orange-600 text-white p-6">
+                    <div class="flex items-center justify-between">
+                        <div>
+                            <span class="bg-amber-700/60 text-amber-100 text-xs font-bold px-3 py-1 rounded-full uppercase">Pillar 3: Sustainable Living • Zero Waste</span>
+                            <h2 class="text-2xl font-extrabold font-outfit mt-1">Station 3: Canteen Waste-to-Resource Lab</h2>
+                        </div>
+                        <i class="fa-solid fa-dumpster-fire text-4xl text-amber-200 opacity-80"></i>
+                    </div>
+                    <p class="text-xs md:text-sm text-amber-100 mt-2">
+                        Did you know Singapore generated 755,000 tonnes of food waste last year? Learn how our canteen food waste can be digested into nutrient-rich compost!
+                    </p>
+                </div>
+
+                <div class="flex border-b border-slate-200 bg-slate-50">
+                    <button onclick="switchSubTab('canteen', 'sim')" id="subtab-canteen-sim" class="subtab-btn active-subtab flex-1 py-3 text-center text-sm font-bold text-amber-700 border-b-2 border-amber-600 bg-white">
+                        <i class="fa-solid fa-gamepad mr-1.5"></i> Interactive Food Digestor Simulation
+                    </button>
+                    <button onclick="switchSubTab('canteen', 'offline')" id="subtab-canteen-offline" class="subtab-btn flex-1 py-3 text-center text-sm font-bold text-slate-600 hover:text-amber-700">
+                        <i class="fa-solid fa-clipboard-list mr-1.5"></i> Offline Canteen Plate Waste Audit
+                    </button>
+                </div>
+
+                <div class="p-6">
+                    <!-- SUBTAB 1: SIMULATION -->
+                    <div id="canteen-sim-view">
+                        <div class="grid grid-cols-1 lg:grid-cols-12 gap-6">
+                            <!-- Controls -->
+                            <div class="lg:col-span-5 bg-amber-50/60 p-5 rounded-2xl border border-amber-200 flex flex-col justify-between">
+                                <div>
+                                    <h3 class="font-bold text-slate-800 text-base mb-1 font-outfit flex items-center">
+                                        <i class="fa-solid fa-sliders text-amber-600 mr-2"></i> Food Waste Digestor Controls
+                                    </h3>
+                                    <p class="text-xs text-slate-600 mb-4">Balance Carbon (Browns) and Nitrogen (Greens/Food) + Moisture & Oxygen to optimize microbial breakdown speed.</p>
+
+                                    <!-- Slider 1: Nitrogen / Food Waste Scraps -->
+                                    <div class="mb-4">
+                                        <div class="flex justify-between text-xs font-semibold text-slate-700 mb-1">
+                                            <span>Food Scraps (Nitrogen - Greens)</span>
+                                            <span id="val-greens">50%</span>
+                                        </div>
+                                        <input type="range" id="input-greens" min="10" max="90" value="50" oninput="updateDigestorSim()" class="w-full accent-amber-600">
+                                    </div>
+
+                                    <!-- Slider 2: Moisture Level -->
+                                    <div class="mb-4">
+                                        <div class="flex justify-between text-xs font-semibold text-slate-700 mb-1">
+                                            <span>Moisture Level (%)</span>
+                                            <span id="val-moisture">50%</span>
+                                        </div>
+                                        <input type="range" id="input-moisture" min="10" max="90" value="50" oninput="updateDigestorSim()" class="w-full accent-blue-600">
+                                    </div>
+
+                                    <!-- Toggle: Aeration (Oxygen) -->
+                                    <div class="mb-4 flex items-center justify-between bg-white p-3 rounded-xl border border-amber-200">
+                                        <div>
+                                            <span class="text-xs font-bold text-slate-800 block">Aeration Pump (Oxygen)</span>
+                                            <span class="text-[10px] text-slate-500">Prevents anaerobic smelly decay</span>
+                                        </div>
+                                        <label class="relative inline-flex items-center cursor-pointer">
+                                            <input type="checkbox" id="input-aeration" onchange="updateDigestorSim()" checked class="sr-only peer">
+                                            <div class="w-11 h-6 bg-slate-300 peer-focus:outline-none rounded-full peer peer-checked:after:translate-x-full peer-checked:after:border-white after:content-[''] after:absolute after:top-[2px] after:left-[2px] after:bg-white after:border-slate-300 after:border after:rounded-full after:h-5 after:w-5 after:transition-all peer-checked:bg-emerald-600"></div>
+                                        </label>
+                                    </div>
+                                </div>
+
+                                <button onclick="checkCanteenMission()" class="w-full py-3 bg-amber-600 hover:bg-amber-700 text-white font-bold text-sm rounded-xl shadow-md transition flex items-center justify-center space-x-2">
+                                    <i class="fa-solid fa-play"></i>
+                                    <span>Run Digestor Cycle & Earn Badge</span>
+                                </button>
+                            </div>
+
+                            <!-- Simulator Output Display -->
+                            <div class="lg:col-span-7 bg-slate-900 text-white p-5 rounded-2xl flex flex-col justify-between relative overflow-hidden">
+                                <div>
+                                    <div class="flex justify-between items-center border-b border-slate-700 pb-3 mb-4">
+                                        <span class="text-xs font-bold uppercase text-amber-400 tracking-wider">Digestor Telemetry Monitor</span>
+                                        <span id="digestor-status" class="text-xs bg-emerald-900/80 text-emerald-300 px-2.5 py-1 rounded-full font-mono">Status: Optimal</span>
+                                    </div>
+
+                                    <!-- Live Gauges -->
+                                    <div class="grid grid-cols-3 gap-3 mb-4 text-center">
+                                        <div class="bg-slate-800 p-3 rounded-xl border border-slate-700">
+                                            <span class="text-[10px] text-slate-400 uppercase font-semibold block">Internal Temp</span>
+                                            <span id="gauge-temp" class="text-xl font-bold font-mono text-amber-400">55 °C</span>
+                                        </div>
+                                        <div class="bg-slate-800 p-3 rounded-xl border border-slate-700">
+                                            <span class="text-[10px] text-slate-400 uppercase font-semibold block">C : N Ratio</span>
+                                            <span id="gauge-cn" class="text-xl font-bold font-mono text-emerald-400">25 : 1</span>
+                                        </div>
+                                        <div class="bg-slate-800 p-3 rounded-xl border border-slate-700">
+                                            <span class="text-[10px] text-slate-400 uppercase font-semibold block">Decomp Rate</span>
+                                            <span id="gauge-rate" class="text-xl font-bold font-mono text-sky-400">92 %</span>
+                                        </div>
+                                    </div>
+
+                                    <!-- Canvas Graphics for Microbe Activity -->
+                                    <div class="relative bg-slate-950 rounded-xl h-40 border border-slate-800 overflow-hidden flex items-center justify-center">
+                                        <canvas id="canteenCanvas" width="380" height="150" class="w-full h-full"></canvas>
+                                    </div>
+                                </div>
+
+                                <div id="canteen-feedback" class="mt-4 p-3 rounded-xl text-xs bg-slate-800 border border-slate-700 text-slate-200">
+                                    <i class="fa-solid fa-circle-info text-amber-400 mr-1.5"></i>
+                                    <span>Adjust sliders to reach thermophilic temperature (50°C - 65°C) to kill pathogens and decompose waste efficiently!</span>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- SUBTAB 2: OFFLINE HANDS-ON GUIDE -->
+                    <div id="canteen-offline-view" class="hidden">
+                        <div class="bg-amber-50/50 p-5 rounded-2xl border border-amber-200 mb-4">
+                            <h3 class="text-lg font-bold text-amber-900 font-outfit mb-2"><i class="fa-solid fa-clipboard-check mr-2"></i> Hands-on Activity: School Canteen Plate Waste Audit</h3>
+                            <p class="text-xs md:text-sm text-slate-700 leading-relaxed mb-4">
+                                Conduct a real-world audit during recess with your team! Calculate how much unconsumed food is discarded daily in your school.
+                            </p>
+
+                            <div class="grid grid-cols-1 md:grid-cols-3 gap-4 mb-4">
+                                <div class="bg-white p-4 rounded-xl border border-amber-200 shadow-sm">
+                                    <div class="font-bold text-amber-700 text-sm mb-1">Step 1: Collect Data</div>
+                                    <p class="text-xs text-slate-600">Weigh leftover food waste from 3 canteen stalls using a digital hanging scale for 3 consecutive days.</p>
+                                </div>
+                                <div class="bg-white p-4 rounded-xl border border-amber-200 shadow-sm">
+                                    <div class="font-bold text-amber-700 text-sm mb-1">Step 2: STEM Math Challenge</div>
+                                    <p class="text-xs text-slate-600">Calculate Average Daily Waste = (Day 1 + Day 2 + Day 3) / 3. Multiply by 200 school days for annual mass!</p>
+                                </div>
+                                <div class="bg-white p-4 rounded-xl border border-amber-200 shadow-sm">
+                                    <div class="font-bold text-amber-700 text-sm mb-1">Step 3: Action Campaign</div>
+                                    <p class="text-xs text-slate-600">Create poster reminders: "Love Your Food, Waste Zero!" near dish return stations.</p>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- ================= STATION 4: RAINWATER HARVESTING (WATER CONSERVATION) ================= -->
+        <section id="station-rainwater" class="station-content hidden">
+            <div class="bg-white rounded-3xl shadow-md border border-slate-200 overflow-hidden">
+                <div class="bg-gradient-to-r from-sky-500 to-blue-600 text-white p-6">
+                    <div class="flex items-center justify-between">
+                        <div>
+                            <span class="bg-sky-700/60 text-sky-100 text-xs font-bold px-3 py-1 rounded-full uppercase">Pillar 5: Resilient Future • Water Conservation</span>
+                            <h2 class="text-2xl font-extrabold font-outfit mt-1">Station 4: Rainwater Harvest & Bio-Filter Builder</h2>
+                        </div>
+                        <i class="fa-solid fa-cloud-showers-water text-4xl text-sky-200 opacity-80"></i>
+                    </div>
+                    <p class="text-xs md:text-sm text-sky-100 mt-2">
+                        Singapore receives over 2,400mm of rain annually! Learn how rainwater harvesting reduces municipal water demand and how natural bio-filtration purifies water.
+                    </p>
+                </div>
+
+                <div class="flex border-b border-slate-200 bg-slate-50">
+                    <button onclick="switchSubTab('rainwater', 'sim')" id="subtab-rainwater-sim" class="subtab-btn active-subtab flex-1 py-3 text-center text-sm font-bold text-sky-700 border-b-2 border-sky-600 bg-white">
+                        <i class="fa-solid fa-sliders mr-1.5"></i> Interactive STEM Bio-Filter Builder
+                    </button>
+                    <button onclick="switchSubTab('rainwater', 'offline')" id="subtab-rainwater-offline" class="subtab-btn flex-1 py-3 text-center text-sm font-bold text-slate-600 hover:text-sky-700">
+                        <i class="fa-solid fa-vial mr-1.5"></i> Offline DIY Water Filter Challenge
+                    </button>
+                </div>
+
+                <div class="p-6">
+                    <!-- SUBTAB 1: SIMULATION -->
+                    <div id="rainwater-sim-view">
+                        <div class="grid grid-cols-1 lg:grid-cols-12 gap-6">
+                            <!-- Filter Media Builder Controls -->
+                            <div class="lg:col-span-5 bg-sky-50/60 p-5 rounded-2xl border border-sky-200 flex flex-col justify-between">
+                                <div>
+                                    <h3 class="font-bold text-slate-800 text-base mb-1 font-outfit flex items-center">
+                                        <i class="fa-solid fa-layer-group text-sky-600 mr-2"></i> Assemble Filter Layers
+                                    </h3>
+                                    <p class="text-xs text-slate-600 mb-3">Click media in sequence from top to bottom layer to clean dirty rooftop runoff.</p>
+
+                                    <!-- Available Filter Elements -->
+                                    <div class="space-y-2 mb-4">
+                                        <button onclick="addFilterLayer('gravel')" class="w-full text-left p-2.5 rounded-xl border border-slate-300 bg-white hover:bg-sky-100/50 flex items-center justify-between text-xs font-semibold">
+                                            <span><i class="fa-solid fa-cubes text-stone-500 mr-2"></i> Coarse Gravel (Traps leaves/twigs)</span>
+                                            <i class="fa-solid fa-plus text-sky-600"></i>
+                                        </button>
+                                        <button onclick="addFilterLayer('sand')" class="w-full text-left p-2.5 rounded-xl border border-slate-300 bg-white hover:bg-sky-100/50 flex items-center justify-between text-xs font-semibold">
+                                            <span><i class="fa-solid fa-ellipsis-vertical text-amber-600 mr-2"></i> Fine Sand (Traps tiny suspended silt)</span>
+                                            <i class="fa-solid fa-plus text-sky-600"></i>
+                                        </button>
+                                        <button onclick="addFilterLayer('carbon')" class="w-full text-left p-2.5 rounded-xl border border-slate-300 bg-white hover:bg-sky-100/50 flex items-center justify-between text-xs font-semibold">
+                                            <span><i class="fa-solid fa-gem text-slate-800 mr-2"></i> Activated Charcoal (Adsorbs odor/chemicals)</span>
+                                            <i class="fa-solid fa-plus text-sky-600"></i>
+                                        </button>
+                                        <button onclick="addFilterLayer('cotton')" class="w-full text-left p-2.5 rounded-xl border border-slate-300 bg-white hover:bg-sky-100/50 flex items-center justify-between text-xs font-semibold">
+                                            <span><i class="fa-solid fa-feather text-slate-400 mr-2"></i> Cotton Mesh (Final micro-clarifier)</span>
+                                            <i class="fa-solid fa-plus text-sky-600"></i>
+                                        </button>
+                                    </div>
+
+                                    <div class="flex space-x-2 mb-3">
+                                        <button onclick="resetFilterLayers()" class="flex-1 py-1.5 bg-slate-200 hover:bg-slate-300 text-slate-700 text-xs font-bold rounded-lg transition">Clear Layers</button>
+                                    </div>
+                                </div>
+
+                                <button onclick="testWaterFilter()" class="w-full py-3 bg-sky-600 hover:bg-sky-700 text-white font-bold text-sm rounded-xl shadow-md transition flex items-center justify-center space-x-2">
+                                    <i class="fa-solid fa-faucet-drip"></i>
+                                    <span>Test Rainwater Filtration</span>
+                                </button>
+                            </div>
+
+                            <!-- Filter Column Graphic & Sensor Output -->
+                            <div class="lg:col-span-7 bg-slate-900 text-white p-5 rounded-2xl flex flex-col justify-between">
+                                <div>
+                                    <div class="flex justify-between items-center border-b border-slate-700 pb-3 mb-4">
+                                        <span class="text-xs font-bold uppercase text-sky-400 tracking-wider">Water Quality Sensors</span>
+                                        <span id="water-quality-tag" class="text-xs bg-slate-800 text-slate-300 px-2.5 py-1 rounded-full font-mono">Status: Ready</span>
+                                    </div>
+
+                                    <div class="grid grid-cols-2 gap-3 mb-4 text-center">
+                                        <div class="bg-slate-800 p-3 rounded-xl border border-slate-700">
+                                            <span class="text-[10px] text-slate-400 uppercase font-semibold block">Turbidity (Clarity)</span>
+                                            <span id="gauge-turbidity" class="text-xl font-bold font-mono text-amber-400">180 NTU</span>
+                                        </div>
+                                        <div class="bg-slate-800 p-3 rounded-xl border border-slate-700">
+                                            <span class="text-[10px] text-slate-400 uppercase font-semibold block">Water Purity Score</span>
+                                            <span id="gauge-purity" class="text-xl font-bold font-mono text-rose-400">20 %</span>
+                                        </div>
+                                    </div>
+
+                                    <!-- Visual Filter Column Canvas -->
+                                    <div class="relative bg-slate-950 rounded-xl h-44 border border-slate-800 overflow-hidden flex items-center justify-center p-2">
+                                        <canvas id="waterCanvas" width="380" height="160" class="w-full h-full"></canvas>
+                                    </div>
+                                </div>
+
+                                <div id="rainwater-feedback" class="mt-4 p-3 rounded-xl text-xs bg-slate-800 border border-slate-700 text-slate-200">
+                                    <i class="fa-solid fa-circle-info text-sky-400 mr-1.5"></i>
+                                    <span>Stack the filter layers correctly: Coarse Gravel top -> Fine Sand -> Activated Charcoal -> Cotton Mesh bottom!</span>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- SUBTAB 2: OFFLINE HANDS-ON GUIDE -->
+                    <div id="rainwater-offline-view" class="hidden">
+                        <div class="bg-sky-50/50 p-5 rounded-2xl border border-sky-200 mb-4">
+                            <h3 class="text-lg font-bold text-sky-900 font-outfit mb-2"><i class="fa-solid fa-flask mr-2"></i> Hands-on Activity: Build a 2-Litre Bottle Bio-Filter</h3>
+                            <p class="text-xs md:text-sm text-slate-700 leading-relaxed mb-4">
+                                Gather recycled materials and build a real water filter column in your school garden!
+                            </p>
+
+                            <div class="grid grid-cols-1 md:grid-cols-3 gap-4 mb-4">
+                                <div class="bg-white p-4 rounded-xl border border-sky-200 shadow-sm">
+                                    <div class="font-bold text-sky-700 text-sm mb-1">Materials Needed</div>
+                                    <p class="text-xs text-slate-600">Cut 1.5L mineral bottle, cotton wool, crushed activated charcoal, clean coarse sand, small pebbles, muddy pond water.</p>
+                                </div>
+                                <div class="bg-white p-4 rounded-xl border border-sky-200 shadow-sm">
+                                    <div class="font-bold text-sky-700 text-sm mb-1">STEM Testing</div>
+                                    <p class="text-xs text-slate-600">Pour 200ml muddy water. Time how long (seconds) it takes to filter and measure filtered volume using a graduated cylinder.</p>
+                                </div>
+                                <div class="bg-white p-4 rounded-xl border border-sky-200 shadow-sm">
+                                    <div class="font-bold text-sky-700 text-sm mb-1">Scientific Thinking</div>
+                                    <p class="text-xs text-slate-600">Why is activated charcoal needed even if water looks clear? (Discuss adsorption vs physical filtration!)</p>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- ================= STATION 5: CLASSROOM & TOILETS (ELECTRICAL CONSERVATION) ================= -->
+        <section id="station-energy" class="station-content hidden">
+            <div class="bg-white rounded-3xl shadow-md border border-slate-200 overflow-hidden">
+                <div class="bg-gradient-to-r from-amber-500 to-yellow-600 text-white p-6">
+                    <div class="flex items-center justify-between">
+                        <div>
+                            <span class="bg-amber-800/60 text-amber-100 text-xs font-bold px-3 py-1 rounded-full uppercase">Pillar 2: Energy Reset • Smart Electrical Conservation</span>
+                            <h2 class="text-2xl font-extrabold font-outfit mt-1">Station 5: Smart Classroom & Restroom Energy Eco-Lab</h2>
+                        </div>
+                        <i class="fa-solid fa-bolt text-4xl text-amber-200 opacity-80"></i>
+                    </div>
+                    <p class="text-xs md:text-sm text-amber-100 mt-2">
+                        Did you know that cooling and lighting account for over 60% of electricity used in Singapore schools? Learn how smart sensors, LED retrofits, and 25°C air-con setpoints cut power bills!
+                    </p>
+                </div>
+
+                <div class="flex border-b border-slate-200 bg-slate-50">
+                    <button onclick="switchSubTab('energy', 'sim')" id="subtab-energy-sim" class="subtab-btn active-subtab flex-1 py-3 text-center text-sm font-bold text-amber-700 border-b-2 border-amber-600 bg-white">
+                        <i class="fa-solid fa-sliders mr-1.5"></i> Interactive Energy Audit Simulator
+                    </button>
+                    <button onclick="switchSubTab('energy', 'offline')" id="subtab-energy-offline" class="subtab-btn flex-1 py-3 text-center text-sm font-bold text-slate-600 hover:text-amber-700">
+                        <i class="fa-solid fa-lightbulb mr-1.5"></i> Offline Classroom "Vampire Power" Patrol
+                    </button>
+                </div>
+
+                <div class="p-6">
+                    <!-- SUBTAB 1: SIMULATION -->
+                    <div id="energy-sim-view">
+                        <div class="grid grid-cols-1 lg:grid-cols-12 gap-6">
+                            <!-- Energy Audit Controls -->
+                            <div class="lg:col-span-5 bg-amber-50/60 p-5 rounded-2xl border border-amber-200 flex flex-col justify-between">
+                                <div>
+                                    <h3 class="font-bold text-slate-800 text-base mb-1 font-outfit flex items-center">
+                                        <i class="fa-solid fa-microchip text-amber-600 mr-2"></i> Smart Energy Controls
+                                    </h3>
+                                    <p class="text-xs text-slate-600 mb-4">Optimize air-con temperatures, lighting technology, motion sensors, and rooftop solar power.</p>
+
+                                    <!-- Slider 1: Air-Con Temp Setpoint -->
+                                    <div class="mb-4">
+                                        <div class="flex justify-between text-xs font-semibold text-slate-700 mb-1">
+                                            <span>Air-Con Temperature Setpoint</span>
+                                            <span id="val-temp" class="font-mono text-amber-700">20°C</span>
+                                        </div>
+                                        <input type="range" id="input-temp" min="18" max="28" value="20" oninput="updateEnergySim()" class="w-full accent-amber-600">
+                                        <span class="text-[10px] text-slate-500 block mt-0.5">NEA Recommended standard: 25°C</span>
+                                    </div>
+
+                                    <!-- Dropdown / Select: Lighting Tech -->
+                                    <div class="mb-4">
+                                        <span class="text-xs font-semibold text-slate-700 block mb-1">Classroom Lighting Tech</span>
+                                        <select id="input-lighting" onchange="updateEnergySim()" class="w-full p-2 text-xs rounded-xl border border-slate-300 bg-white font-medium text-slate-700 focus:ring-2 focus:ring-amber-500">
+                                            <option value="fluorescent">Old Fluorescent Tubes (High Power ~40W/tube)</option>
+                                            <option value="led">Energy Efficient LED Tubes (Low Power ~12W/tube)</option>
+                                        </select>
+                                    </div>
+
+                                    <!-- Toggle: Restroom Motion Sensors -->
+                                    <div class="mb-3 flex items-center justify-between bg-white p-3 rounded-xl border border-amber-200">
+                                        <div>
+                                            <span class="text-xs font-bold text-slate-800 block">Restroom Auto Motion Sensors</span>
+                                            <span class="text-[10px] text-slate-500">Turns off lights/fans when empty</span>
+                                        </div>
+                                        <label class="relative inline-flex items-center cursor-pointer">
+                                            <input type="checkbox" id="input-sensor" onchange="updateEnergySim()" class="sr-only peer">
+                                            <div class="w-11 h-6 bg-slate-300 peer-focus:outline-none rounded-full peer peer-checked:after:translate-x-full peer-checked:after:border-white after:content-[''] after:absolute after:top-[2px] after:left-[2px] after:bg-white after:border-slate-300 after:border after:rounded-full after:h-5 after:w-5 after:transition-all peer-checked:bg-emerald-600"></div>
+                                        </label>
+                                    </div>
+
+                                    <!-- Toggle: Rooftop Solar PV Panels -->
+                                    <div class="mb-4 flex items-center justify-between bg-white p-3 rounded-xl border border-amber-200">
+                                        <div>
+                                            <span class="text-xs font-bold text-slate-800 block">Rooftop Solar PV Integration</span>
+                                            <span class="text-[10px] text-slate-500">Generates clean renewable energy</span>
+                                        </div>
+                                        <label class="relative inline-flex items-center cursor-pointer">
+                                            <input type="checkbox" id="input-solar" onchange="updateEnergySim()" class="sr-only peer">
+                                            <div class="w-11 h-6 bg-slate-300 peer-focus:outline-none rounded-full peer peer-checked:after:translate-x-full peer-checked:after:border-white after:content-[''] after:absolute after:top-[2px] after:left-[2px] after:bg-white after:border-slate-300 after:border after:rounded-full after:h-5 after:w-5 after:transition-all peer-checked:bg-emerald-600"></div>
+                                        </label>
+                                    </div>
+                                </div>
+
+                                <button onclick="checkEnergyMission()" class="w-full py-3 bg-amber-600 hover:bg-amber-700 text-white font-bold text-sm rounded-xl shadow-md transition flex items-center justify-center space-x-2">
+                                    <i class="fa-solid fa-award"></i>
+                                    <span>Complete Energy Audit & Earn Badge</span>
+                                </button>
+                            </div>
+
+                            <!-- Live Energy Canvas Monitor -->
+                            <div class="lg:col-span-7 bg-slate-900 text-white p-5 rounded-2xl flex flex-col justify-between">
+                                <div>
+                                    <div class="flex justify-between items-center border-b border-slate-700 pb-3 mb-4">
+                                        <span class="text-xs font-bold uppercase text-amber-400 tracking-wider">Smart Power Grid Telemetry</span>
+                                        <span id="energy-status-tag" class="text-xs bg-rose-900 text-rose-300 px-2.5 py-1 rounded-full font-mono">Efficiency: Poor</span>
+                                    </div>
+
+                                    <div class="grid grid-cols-3 gap-3 mb-4 text-center">
+                                        <div class="bg-slate-800 p-3 rounded-xl border border-slate-700">
+                                            <span class="text-[10px] text-slate-400 uppercase font-semibold block">Power Load</span>
+                                            <span id="gauge-power" class="text-xl font-bold font-mono text-amber-400">4,200 W</span>
+                                        </div>
+                                        <div class="bg-slate-800 p-3 rounded-xl border border-slate-700">
+                                            <span class="text-[10px] text-slate-400 uppercase font-semibold block">Monthly Cost</span>
+                                            <span id="gauge-cost" class="text-xl font-bold font-mono text-rose-400">$380 / mo</span>
+                                        </div>
+                                        <div class="bg-slate-800 p-3 rounded-xl border border-slate-700">
+                                            <span class="text-[10px] text-slate-400 uppercase font-semibold block">CO2 Cut</span>
+                                            <span id="gauge-co2" class="text-xl font-bold font-mono text-emerald-400">0 kg/mo</span>
+                                        </div>
+                                    </div>
+
+                                    <div class="relative bg-slate-950 rounded-xl h-44 border border-slate-800 overflow-hidden flex items-center justify-center p-2">
+                                        <canvas id="energyCanvas" width="380" height="160" class="w-full h-full"></canvas>
+                                    </div>
+                                </div>
+
+                                <div id="energy-feedback" class="mt-4 p-3 rounded-xl text-xs bg-slate-800 border border-slate-700 text-slate-200">
+                                    <i class="fa-solid fa-circle-info text-amber-400 mr-1.5"></i>
+                                    <span>Raising air-con temperature from 20°C to 25°C saves up to 25% electricity! Upgrade to LED lights and enable solar to reach optimal efficiency.</span>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- SUBTAB 2: OFFLINE HANDS-ON GUIDE -->
+                    <div id="energy-offline-view" class="hidden">
+                        <div class="bg-amber-50/50 p-5 rounded-2xl border border-amber-200 mb-4">
+                            <h3 class="text-lg font-bold text-amber-900 font-outfit mb-2"><i class="fa-solid fa-bolt mr-2"></i> Hands-on Activity: Classroom "Vampire Power" Patrol Audit</h3>
+                            <p class="text-xs md:text-sm text-slate-700 leading-relaxed mb-4">
+                                Inspect your classroom and toilets for standby power loss ("vampire energy") and air-con efficiency settings!
+                            </p>
+
+                            <div class="grid grid-cols-1 md:grid-cols-3 gap-4 mb-4">
+                                <div class="bg-white p-4 rounded-xl border border-amber-200 shadow-sm">
+                                    <div class="font-bold text-amber-700 text-sm mb-1">Step 1: Plug & Sensor Check</div>
+                                    <p class="text-xs text-slate-600">Locate visual projectors, document cameras, and water coolers left on standby mode over weekends.</p>
+                                </div>
+                                <div class="bg-white p-4 rounded-xl border border-amber-200 shadow-sm">
+                                    <div class="font-bold text-amber-700 text-sm mb-1">Step 2: Air-Con 25°C Sticker Campaign</div>
+                                    <p class="text-xs text-slate-600">Use a digital thermometer to measure classroom temperature. Stick prompt labels near air-con remotes: "Set to 25°C for SG Green Plan!"</p>
+                                </div>
+                                <div class="bg-white p-4 rounded-xl border border-amber-200 shadow-sm">
+                                    <div class="font-bold text-amber-700 text-sm mb-1">Step 3: Toilet Light Monitor</div>
+                                    <p class="text-xs text-slate-600">Check if toilet lights remain switched on during bright daylight hours. Submit recommendations to switch to motion sensor switches!</p>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- PASSPORT & BADGE MODAL -->
+        <div id="badge-modal" class="fixed inset-0 bg-slate-900/60 backdrop-blur-sm z-50 flex items-center justify-center p-4 hidden">
+            <div class="bg-white rounded-3xl max-w-lg w-full p-6 shadow-2xl border border-slate-200 relative animate-fade-in">
+                <button onclick="closeModal('badge-modal')" class="absolute top-4 right-4 w-8 h-8 rounded-full bg-slate-100 hover:bg-slate-200 text-slate-500 font-bold flex items-center justify-center text-sm">✕</button>
+                
+                <div class="text-center mb-6">
+                    <div class="w-16 h-16 bg-yellow-100 text-yellow-600 rounded-full flex items-center justify-center mx-auto mb-2 text-2xl shadow-inner">
+                        <i class="fa-solid fa-passport"></i>
+                    </div>
+                    <h3 class="text-xl font-extrabold text-slate-800 font-outfit">Sustainability Eco-Passport</h3>
+                    <p class="text-xs text-slate-500">Singapore Green Plan 2030 Junior Champion</p>
+                </div>
+
+                <div class="grid grid-cols-2 sm:grid-cols-3 gap-2.5 mb-6">
+                    <!-- Badge 1 -->
+                    <div id="modal-badge-ecogarden" class="p-3 rounded-2xl border-2 border-dashed border-slate-200 bg-slate-50 text-center opacity-60">
+                        <i class="fa-solid fa-bug text-2xl text-emerald-500 mb-1 block"></i>
+                        <div class="font-bold text-xs text-slate-800">Biodiversity Defender</div>
+                        <span class="text-[9px] text-slate-400 block mt-0.5">Station 1: Eco-Garden</span>
+                    </div>
+
+                    <!-- Badge 2 -->
+                    <div id="modal-badge-hydroponics" class="p-3 rounded-2xl border-2 border-dashed border-slate-200 bg-slate-50 text-center opacity-60">
+                        <i class="fa-solid fa-seedling text-2xl text-purple-500 mb-1 block"></i>
+                        <div class="font-bold text-xs text-slate-800">Agri-Tech Pioneer</div>
+                        <span class="text-[9px] text-slate-400 block mt-0.5">Station 2: Hydroponics</span>
+                    </div>
+
+                    <!-- Badge 3 -->
+                    <div id="modal-badge-canteen" class="p-3 rounded-2xl border-2 border-dashed border-slate-200 bg-slate-50 text-center opacity-60">
+                        <i class="fa-solid fa-recycle text-2xl text-amber-500 mb-1 block"></i>
+                        <div class="font-bold text-xs text-slate-800">Zero Waste Hero</div>
+                        <span class="text-[9px] text-slate-400 block mt-0.5">Station 3: Canteen</span>
+                    </div>
+
+                    <!-- Badge 4 -->
+                    <div id="modal-badge-rainwater" class="p-3 rounded-2xl border-2 border-dashed border-slate-200 bg-slate-50 text-center opacity-60">
+                        <i class="fa-solid fa-droplet text-2xl text-sky-500 mb-1 block"></i>
+                        <div class="font-bold text-xs text-slate-800">Hydro Engineer</div>
+                        <span class="text-[9px] text-slate-400 block mt-0.5">Station 4: Rainwater</span>
+                    </div>
+
+                    <!-- Badge 5 -->
+                    <div id="modal-badge-energy" class="p-3 rounded-2xl border-2 border-dashed border-slate-200 bg-slate-50 text-center opacity-60 sm:col-span-2 lg:col-span-1">
+                        <i class="fa-solid fa-bolt text-2xl text-yellow-500 mb-1 block"></i>
+                        <div class="font-bold text-xs text-slate-800">Energy Champion</div>
+                        <span class="text-[9px] text-slate-400 block mt-0.5">Station 5: Energy</span>
+                    </div>
+                </div>
+
+                <div class="bg-emerald-50 p-4 rounded-2xl border border-emerald-200 text-center">
+                    <p class="text-xs text-emerald-800 font-semibold mb-2">Pledge for Singapore Green Plan 2030:</p>
+                    <p class="text-[11px] text-emerald-700 italic">"I promise to save water & electricity, reduce food waste, protect our native biodiversity, and build a sustainable green future!"</p>
+                </div>
+            </div>
+        </div>
+
+        <!-- NOTIFICATION TOAST -->
+        <div id="toast-msg" class="fixed bottom-5 right-5 z-50 bg-slate-900 text-white px-5 py-3 rounded-2xl shadow-xl flex items-center space-x-3 transition-all duration-300 transform translate-y-20 opacity-0 pointer-events-none border border-slate-700">
+            <i id="toast-icon" class="fa-solid fa-circle-check text-emerald-400 text-lg"></i>
+            <span id="toast-text" class="text-xs font-semibold">Mission Completed! Badge unlocked.</span>
+        </div>
+
+    </main>
+
+    <!-- FOOTER -->
+    <footer class="bg-slate-900 text-slate-400 text-xs py-5 border-t border-slate-800 mt-10">
+        <div class="max-w-6xl mx-auto px-4 text-center space-y-2">
+            <p class="font-semibold text-slate-300">SG Eco-Explorer Sustainability STEM Module</p>
+            <p class="text-[11px] text-slate-500">Designed for Primary 3 to Primary 6 Environmental Science Club Curriculum • Supports SG Green Plan 2030</p>
+        </div>
+    </footer>
+
+    <!-- JAVASCRIPT ENGINE -->
+    <script>
+        // Global Application State
+        const appState = {
+            badges: {
+                ecogarden: false,
+                hydroponics: false,
+                canteen: false,
+                rainwater: false,
+                energy: false
+            },
+            currentStation: 'ecogarden',
+            filterLayers: [],
+            hydroSpectrum: 'blue'
+        };
+
+        // Window Onload Setup
+        window.onload = function() {
+            initGardenCanvas();
+            initHydroCanvas();
+            initCanteenCanvas();
+            initWaterCanvas();
+            initEnergyCanvas();
+
+            updateGardenSim();
+            updateHydroSim();
+            updateDigestorSim();
+            renderFilterCanvas();
+            updateEnergySim();
+        };
+
+        // Switch Station Handler
+        function switchStation(stationId) {
+            appState.currentStation = stationId;
+
+            // Hide all sections
+            document.querySelectorAll('.station-content').forEach(el => el.classList.add('hidden'));
+            
+            // Show selected section
+            document.getElementById(`station-${stationId}`).classList.remove('hidden');
+
+            // Update Tab styles
+            document.querySelectorAll('.station-tab').forEach(el => {
+                el.classList.remove('active-tab', 'border-emerald-500');
+                el.classList.add('border-transparent');
+            });
+
+            const activeBtn = document.getElementById(`tab-${stationId}`);
+            activeBtn.classList.add('active-tab', 'border-emerald-500');
+            activeBtn.classList.remove('border-transparent');
+
+            // Trigger Canvas updates when tab becomes visible
+            setTimeout(() => {
+                if(stationId === 'ecogarden') drawGardenSim();
+                if(stationId === 'hydroponics') drawHydroSim();
+                if(stationId === 'canteen') drawCanteenSim();
+                if(stationId === 'rainwater') renderFilterCanvas();
+                if(stationId === 'energy') drawEnergySim();
+            }, 50);
+        }
+
+        // Switch SubTab (Simulation vs Offline)
+        function switchSubTab(stationId, type) {
+            const simView = document.getElementById(`${stationId}-sim-view`);
+            const offlineView = document.getElementById(`${stationId}-offline-view`);
+            const simBtn = document.getElementById(`subtab-${stationId}-sim`);
+            const offlineBtn = document.getElementById(`subtab-${stationId}-offline`);
+
+            if (type === 'sim') {
+                simView.classList.remove('hidden');
+                offlineView.classList.add('hidden');
+
+                simBtn.classList.add('text-emerald-700', 'border-b-2', 'border-emerald-600', 'bg-white');
+                simBtn.classList.remove('text-slate-600');
+                offlineBtn.classList.remove('text-emerald-700', 'border-b-2', 'border-emerald-600', 'bg-white');
+                offlineBtn.classList.add('text-slate-600');
+            } else {
+                simView.classList.add('hidden');
+                offlineView.classList.remove('hidden');
+
+                offlineBtn.classList.add('text-emerald-700', 'border-b-2', 'border-emerald-600', 'bg-white');
+                offlineBtn.classList.remove('text-slate-600');
+                simBtn.classList.remove('text-emerald-700', 'border-b-2', 'border-emerald-600', 'bg-white');
+                simBtn.classList.add('text-slate-600');
+            }
+        }
+
+        // ================= STATION 1: ECO-GARDEN SIMULATION LOGIC =================
+        let gardenCtx;
+
+        function initGardenCanvas() {
+            const canvas = document.getElementById('gardenCanvas');
+            if (canvas) gardenCtx = canvas.getContext('2d');
+        }
+
+        function updateGardenSim() {
+            const plants = parseInt(document.getElementById('input-plants').value);
+            const pollinators = parseInt(document.getElementById('input-pollination').value);
+            const predators = parseInt(document.getElementById('input-predators').value);
+
+            document.getElementById('val-plants').innerText = plants;
+            document.getElementById('val-pollination').innerText = pollinators;
+            document.getElementById('val-predators').innerText = predators;
+
+            let pollRate = Math.min(Math.round((pollinators / plants) * 120), 100);
+            let isBalanced = (plants >= 50 && pollinators >= 30 && predators >= 10 && predators <= 25);
+
+            document.getElementById('gauge-pollination').innerText = pollRate + ' %';
+            document.getElementById('gauge-foodbalance').innerText = isBalanced ? 'Optimal' : 'Imbalanced';
+
+            const statusTag = document.getElementById('garden-status-tag');
+            const feedbackText = document.getElementById('garden-feedback');
+
+            if (isBalanced) {
+                statusTag.className = "text-xs bg-emerald-900 text-emerald-300 px-2.5 py-1 rounded-full font-mono";
+                statusTag.innerText = "Biodiversity Index: High & Resilient";
+                feedbackText.innerHTML = `<i class="fa-solid fa-circle-check text-emerald-400 mr-1.5"></i> Healthy Ecosystem Equilibrium! High species richness ensures natural pest management without chemical pesticides.`;
+            } else {
+                statusTag.className = "text-xs bg-amber-900 text-amber-300 px-2.5 py-1 rounded-full font-mono";
+                statusTag.innerText = "Biodiversity Index: Risk of Collapse";
+                feedbackText.innerHTML = `<i class="fa-solid fa-triangle-exclamation text-amber-400 mr-1.5"></i> Too few plants or imbalanced predator ratio! Adjust host plants and pollinator counts.`;
+            }
+
+            drawGardenSim();
+        }
+
+        function drawGardenSim() {
+            if (!gardenCtx) return;
+            const width = gardenCtx.canvas.width;
+            const height = gardenCtx.canvas.height;
+            gardenCtx.clearRect(0, 0, width, height);
+
+            // Grass background
+            gardenCtx.fillStyle = '#14532d';
+            gardenCtx.fillRect(0, 0, width, height);
+
+            const pollinators = parseInt(document.getElementById('input-pollination').value);
+            const time = Date.now() * 0.002;
+
+            // Animated Butterflies
+            gardenCtx.fillStyle = '#f59e0b';
+            for (let i = 0; i < Math.min(pollinators, 20); i++) {
+                const x = 30 + (i * 25 + Math.sin(time + i) * 20) % (width - 60);
+                const y = 30 + (i * 15 + Math.cos(time + i) * 15) % (height - 60);
+
+                gardenCtx.beginPath();
+                gardenCtx.arc(x, y, 4, 0, Math.PI * 2);
+                gardenCtx.fill();
+            }
+        }
+
+        function checkGardenBalance() {
+            const isBalanced = document.getElementById('gauge-foodbalance').innerText === 'Optimal';
+            if (isBalanced) {
+                unlockBadge('ecogarden', 'Biodiversity Defender');
+            } else {
+                showToast('Balance the host plants, pollinators, and predators to achieve Equilibrium!', 'warning');
+            }
+        }
+
+        // ================= STATION 2: HYDROPONICS SIMULATION LOGIC =================
+        let hydroCtx;
+
+        function initHydroCanvas() {
+            const canvas = document.getElementById('hydroCanvas');
+            if (canvas) hydroCtx = canvas.getContext('2d');
+        }
+
+        function setSpectrum(color, evt) {
+            appState.hydroSpectrum = color;
+            document.querySelectorAll('.spec-btn').forEach(btn => {
+                btn.classList.remove('bg-purple-600', 'text-white', 'border-purple-500');
+            });
+            if (evt && evt.target) {
+                evt.target.classList.add('bg-purple-600', 'text-white', 'border-purple-500');
+            }
+            updateHydroSim();
+        }
+
+        function updateHydroSim() {
+            const ec = parseFloat(document.getElementById('input-ec').value);
+            const ph = parseFloat(document.getElementById('input-ph').value);
+
+            document.getElementById('val-ec').innerText = ec.toFixed(1);
+            document.getElementById('val-ph').innerText = ph.toFixed(1);
+
+            let health = 100;
+            if (ec < 1.2 || ec > 2.4) health -= 30;
+            if (ph < 5.5 || ph > 6.8) health -= 35;
+            if (appState.hydroSpectrum !== 'blue') health -= 20;
+
+            health = Math.max(health, 10);
+
+            let photosyn = Math.round(health * 0.95);
+            let estYield = Math.round(500 * (health / 100));
+
+            document.getElementById('gauge-photosynthesis').innerText = photosyn + ' %';
+            document.getElementById('gauge-yield').innerText = estYield + ' g';
+
+            const healthTag = document.getElementById('hydro-health-tag');
+            healthTag.innerText = `Plant Health: ${health}%`;
+            healthTag.className = health >= 80 ? "text-xs bg-emerald-900 text-emerald-300 px-2.5 py-1 rounded-full font-mono" : "text-xs bg-rose-900 text-rose-300 px-2.5 py-1 rounded-full font-mono";
+
+            drawHydroSim();
+        }
+
+        function drawHydroSim() {
+            if (!hydroCtx) return;
+            const width = hydroCtx.canvas.width;
+            const height = hydroCtx.canvas.height;
+            hydroCtx.clearRect(0, 0, width, height);
+
+            // Light Ray Overlay
+            let lightColor = 'rgba(168, 85, 247, 0.2)';
+            if (appState.hydroSpectrum === 'red') lightColor = 'rgba(239, 68, 68, 0.2)';
+            if (appState.hydroSpectrum === 'green') lightColor = 'rgba(34, 197, 94, 0.2)';
+
+            hydroCtx.fillStyle = lightColor;
+            hydroCtx.fillRect(40, 0, width - 80, 90);
+
+            // Channel Pipe
+            hydroCtx.fillStyle = '#e2e8f0';
+            hydroCtx.fillRect(20, 100, width - 40, 25);
+
+            // Draw Plants
+            const ec = parseFloat(document.getElementById('input-ec').value);
+            const ph = parseFloat(document.getElementById('input-ph').value);
+            let leafColor = (ec >= 1.2 && ec <= 2.4 && ph >= 5.5 && ph <= 6.8) ? '#22c55e' : '#a3e635';
+
+            for (let i = 0; i < 4; i++) {
+                const x = 60 + i * 80;
+                // Plant Leaves
+                hydroCtx.fillStyle = leafColor;
+                hydroCtx.beginPath();
+                hydroCtx.arc(x, 90, 18, 0, Math.PI * 2);
+                hydroCtx.fill();
+
+                // Net Cup
+                hydroCtx.fillStyle = '#475569';
+                hydroCtx.fillRect(x - 8, 98, 16, 10);
+            }
+        }
+
+        function runHydroHarvest() {
+            const photosyn = parseInt(document.getElementById('gauge-photosynthesis').innerText);
+            if (photosyn >= 75) {
+                unlockBadge('hydroponics', 'Agri-Tech Pioneer');
+            } else {
+                showToast('Adjust EC (1.4 - 2.2), pH (5.8 - 6.5) & Spectrum (Red+Blue)!', 'warning');
+            }
+        }
+
+        // ================= STATION 3: CANTEEN SIMULATION LOGIC =================
+        let canteenCtx;
+
+        function initCanteenCanvas() {
+            const canvas = document.getElementById('canteenCanvas');
+            if (canvas) canteenCtx = canvas.getContext('2d');
+        }
+
+        function updateDigestorSim() {
+            const greens = parseInt(document.getElementById('input-greens').value);
+            const moisture = parseInt(document.getElementById('input-moisture').value);
+            const aeration = document.getElementById('input-aeration').checked;
+
+            document.getElementById('val-greens').innerText = greens + '%';
+            document.getElementById('val-moisture').innerText = moisture + '%';
+
+            // Science formulas: Optimal C:N is ~25-30:1, Temp optimal 55C
+            const cnRatio = Math.round((100 - greens) * 0.5 + 10);
+            let temp = 30 + (greens * 0.3) + (aeration ? 15 : 0) - Math.abs(moisture - 50) * 0.2;
+            temp = Math.min(Math.max(Math.round(temp), 32), 68);
+
+            let decompRate = 100 - Math.abs(cnRatio - 25) * 3 - Math.abs(moisture - 50) * 1.2;
+            if (!aeration) decompRate -= 30;
+            decompRate = Math.min(Math.max(Math.round(decompRate), 15), 98);
+
+            document.getElementById('gauge-temp').innerText = temp + ' °C';
+            document.getElementById('gauge-cn').innerText = cnRatio + ' : 1';
+            document.getElementById('gauge-rate').innerText = decompRate + ' %';
+
+            const statusTag = document.getElementById('digestor-status');
+            const feedbackText = document.getElementById('canteen-feedback');
+
+            if (temp >= 50 && temp <= 62 && aeration && decompRate > 75) {
+                statusTag.className = "text-xs bg-emerald-900/80 text-emerald-300 px-2.5 py-1 rounded-full font-mono";
+                statusTag.innerText = "Status: Optimal Thermophilic";
+                feedbackText.innerHTML = `<i class="fa-solid fa-circle-check text-emerald-400 mr-1.5"></i> Excellent! Bacteria are rapidly converting canteen scraps into organic fertilizer!`;
+            } else if (!aeration) {
+                statusTag.className = "text-xs bg-rose-900/80 text-rose-300 px-2.5 py-1 rounded-full font-mono";
+                statusTag.innerText = "Status: Anaerobic (Smelly!)";
+                feedbackText.innerHTML = `<i class="fa-solid fa-triangle-exclamation text-rose-400 mr-1.5"></i> Turn on Aeration pump! Lack of oxygen creates bad odor and slows down decomposition.`;
+            } else {
+                statusTag.className = "text-xs bg-amber-900/80 text-amber-300 px-2.5 py-1 rounded-full font-mono";
+                statusTag.innerText = "Status: Sub-Optimal";
+                feedbackText.innerHTML = `<i class="fa-solid fa-lightbulb text-amber-400 mr-1.5"></i> Adjust moisture to ~50% and green scraps ratio for maximum heat generation.`;
+            }
+
+            drawCanteenSim();
+        }
+
+        function drawCanteenSim() {
+            if (!canteenCtx) return;
+            const width = canteenCtx.canvas.width;
+            const height = canteenCtx.canvas.height;
+            canteenCtx.clearRect(0, 0, width, height);
+
+            // Draw Tank
+            canteenCtx.fillStyle = '#1e293b';
+            canteenCtx.fillRect(20, 20, width - 40, height - 40);
+
+            // Bio Mass background
+            const greens = parseInt(document.getElementById('input-greens').value);
+            canteenCtx.fillStyle = `rgb(${120 - greens}, ${100 + greens}, 40)`;
+            canteenCtx.fillRect(30, 60, width - 60, height - 80);
+
+            // Microbe animated dots
+            const time = Date.now() * 0.003;
+            canteenCtx.fillStyle = '#fbbf24';
+            for (let i = 0; i < 25; i++) {
+                const x = 40 + (i * 13) % (width - 80);
+                const y = 70 + Math.sin(time + i) * 15 + (i * 5) % 40;
+                canteenCtx.beginPath();
+                canteenCtx.arc(x, y, 3, 0, Math.PI * 2);
+                canteenCtx.fill();
+            }
+
+            // Air bubbles if aeration on
+            if (document.getElementById('input-aeration').checked) {
+                canteenCtx.fillStyle = 'rgba(56, 189, 248, 0.7)';
+                for (let i = 0; i < 15; i++) {
+                    const x = 50 + (i * 22) % (width - 100);
+                    const y = 110 - ((Date.now() * 0.05 + i * 20) % 50);
+                    canteenCtx.beginPath();
+                    canteenCtx.arc(x, y, 2.5, 0, Math.PI * 2);
+                    canteenCtx.fill();
+                }
+            }
+        }
+
+        function checkCanteenMission() {
+            const decompRate = parseInt(document.getElementById('gauge-rate').innerText);
+            if (decompRate >= 75) {
+                unlockBadge('canteen', 'Zero Waste Hero');
+            } else {
+                showToast('Adjust parameters to get Decomposition Rate above 75%!', 'warning');
+            }
+        }
+
+        // ================= STATION 4: RAINWATER BIO-FILTER SIMULATION =================
+        let waterCtx;
+
+        function initWaterCanvas() {
+            const canvas = document.getElementById('waterCanvas');
+            if (canvas) waterCtx = canvas.getContext('2d');
+        }
+
+        function addFilterLayer(type) {
+            if (appState.filterLayers.length >= 4) {
+                showToast('Filter tube is full! Click Clear Layers to rebuild.', 'warning');
+                return;
+            }
+            appState.filterLayers.push(type);
+            renderFilterCanvas();
+        }
+
+        function resetFilterLayers() {
+            appState.filterLayers = [];
+            document.getElementById('gauge-turbidity').innerText = '180 NTU';
+            document.getElementById('gauge-purity').innerText = '20 %';
+            document.getElementById('water-quality-tag').innerText = 'Status: Ready';
+            renderFilterCanvas();
+        }
+
+        function renderFilterCanvas() {
+            if (!waterCtx) return;
+            const width = waterCtx.canvas.width;
+            const height = waterCtx.canvas.height;
+            waterCtx.clearRect(0, 0, width, height);
+
+            // Draw Central Filter Tube
+            const tubeX = width / 2 - 50;
+            const tubeY = 10;
+            const tubeW = 100;
+            const tubeH = 140;
+
+            waterCtx.strokeStyle = '#94a3b8';
+            waterCtx.lineWidth = 3;
+            waterCtx.strokeRect(tubeX, tubeY, tubeW, tubeH);
+
+            // Draw Layers
+            const layerH = tubeH / 4;
+            appState.filterLayers.forEach((layer, idx) => {
+                const y = tubeY + (idx * layerH);
+
+                if (layer === 'gravel') {
+                    waterCtx.fillStyle = '#78716c';
+                    waterCtx.fillRect(tubeX + 2, y, tubeW - 4, layerH);
+                    waterCtx.fillStyle = '#44403c';
+                    for (let k = 0; k < 12; k++) {
+                        waterCtx.beginPath();
+                        waterCtx.arc(tubeX + 15 + (k * 18) % 80, y + 8 + (k * 7) % 20, 5, 0, Math.PI * 2);
+                        waterCtx.fill();
+                    }
+                } else if (layer === 'sand') {
+                    waterCtx.fillStyle = '#f59e0b';
+                    waterCtx.fillRect(tubeX + 2, y, tubeW - 4, layerH);
+                } else if (layer === 'carbon') {
+                    waterCtx.fillStyle = '#1e293b';
+                    waterCtx.fillRect(tubeX + 2, y, tubeW - 4, layerH);
+                } else if (layer === 'cotton') {
+                    waterCtx.fillStyle = '#f8fafc';
+                    waterCtx.fillRect(tubeX + 2, y, tubeW - 4, layerH);
+                }
+            });
+        }
+
+        function testWaterFilter() {
+            const correctSequence = ['gravel', 'sand', 'carbon', 'cotton'];
+            const userSeq = appState.filterLayers;
+
+            let isCorrect = userSeq.length === 4 && userSeq.every((val, idx) => val === correctSequence[idx]);
+
+            const turbidityGauge = document.getElementById('gauge-turbidity');
+            const purityGauge = document.getElementById('gauge-purity');
+            const statusTag = document.getElementById('water-quality-tag');
+            const feedbackText = document.getElementById('rainwater-feedback');
+
+            if (isCorrect) {
+                turbidityGauge.innerText = '3 NTU';
+                purityGauge.innerText = '98 %';
+                statusTag.className = "text-xs bg-emerald-900/80 text-emerald-300 px-2.5 py-1 rounded-full font-mono";
+                statusTag.innerText = "Status: Clean & Purified";
+                feedbackText.innerHTML = `<i class="fa-solid fa-circle-check text-emerald-400 mr-1.5"></i> Perfect bio-filtration design! Gravel removes large detritus, sand stops fine sediment, charcoal adsorbs chemicals, and cotton finishes micro-clarification!`;
+                unlockBadge('rainwater', 'Hydro Engineer');
+            } else {
+                turbidityGauge.innerText = '65 NTU';
+                purityGauge.innerText = '45 %';
+                statusTag.className = "text-xs bg-rose-900/80 text-rose-300 px-2.5 py-1 rounded-full font-mono";
+                statusTag.innerText = "Status: Filter Clogged / Incomplete";
+                feedbackText.innerHTML = `<i class="fa-solid fa-circle-xmark text-rose-400 mr-1.5"></i> Order matters! Top-to-bottom must be: Coarse Gravel -> Fine Sand -> Activated Charcoal -> Cotton Mesh.`;
+            }
+        }
+
+        // ================= STATION 5: CLASSROOM & TOILETS ENERGY SIMULATION =================
+        let energyCtx;
+
+        function initEnergyCanvas() {
+            const canvas = document.getElementById('energyCanvas');
+            if (canvas) energyCtx = canvas.getContext('2d');
+        }
+
+        function updateEnergySim() {
+            const temp = parseInt(document.getElementById('input-temp').value);
+            const lightTech = document.getElementById('input-lighting').value;
+            const sensor = document.getElementById('input-sensor').checked;
+            const solar = document.getElementById('input-solar').checked;
+
+            document.getElementById('val-temp').innerText = temp + '°C';
+
+            // Power Calculations
+            let baseAirconPower = 3000 - ((temp - 18) * 350); // Lower temp = much higher load
+            let lightingPower = lightTech === 'fluorescent' ? 1200 : 360;
+            let sensorSaving = sensor ? 300 : 0;
+            let solarGeneration = solar ? 1500 : 0;
+
+            let netPower = Math.max(0, baseAirconPower + lightingPower - sensorSaving - solarGeneration);
+            let monthlyCost = Math.round((netPower * 8 * 30 * 0.32) / 1000); // 32 cents/kWh
+            let co2Savings = Math.round(((4500 - netPower) * 8 * 30 * 0.4) / 1000);
+            co2Savings = Math.max(0, co2Savings);
+
+            document.getElementById('gauge-power').innerText = netPower.toLocaleString() + ' W';
+            document.getElementById('gauge-cost').innerText = '$' + monthlyCost + ' / mo';
+            document.getElementById('gauge-co2').innerText = co2Savings + ' kg/mo';
+
+            const statusTag = document.getElementById('energy-status-tag');
+            const feedbackText = document.getElementById('energy-feedback');
+
+            if (temp >= 25 && lightTech === 'led' && sensor && solar) {
+                statusTag.className = "text-xs bg-emerald-900 text-emerald-300 px-2.5 py-1 rounded-full font-mono";
+                statusTag.innerText = "Efficiency: Super Green Champion";
+                feedbackText.innerHTML = `<i class="fa-solid fa-circle-check text-emerald-400 mr-1.5"></i> Fantastic! Air-con set at 25°C + LED lights + motion sensors + rooftop solar panel grid reduces electricity bills by >65%!`;
+            } else if (temp < 23) {
+                statusTag.className = "text-xs bg-rose-900 text-rose-300 px-2.5 py-1 rounded-full font-mono";
+                statusTag.innerText = "Efficiency: High Power Waste";
+                feedbackText.innerHTML = `<i class="fa-solid fa-temperature-arrow-up text-rose-400 mr-1.5"></i> Air-con temperature is set too low (${temp}°C)! Set to 25°C as recommended by NEA to save electricity.`;
+            } else {
+                statusTag.className = "text-xs bg-amber-900 text-amber-300 px-2.5 py-1 rounded-full font-mono";
+                statusTag.innerText = "Efficiency: Moderate";
+                feedbackText.innerHTML = `<i class="fa-solid fa-lightbulb text-amber-400 mr-1.5"></i> Good start! Enable LED lights, Restroom motion sensors, and Solar PV panels to maximize savings.`;
+            }
+
+            drawEnergySim();
+        }
+
+        function drawEnergySim() {
+            if (!energyCtx) return;
+            const width = energyCtx.canvas.width;
+            const height = energyCtx.canvas.height;
+            energyCtx.clearRect(0, 0, width, height);
+
+            const temp = parseInt(document.getElementById('input-temp').value);
+            const solar = document.getElementById('input-solar').checked;
+
+            // Classroom Box
+            energyCtx.strokeStyle = '#475569';
+            energyCtx.lineWidth = 3;
+            energyCtx.strokeRect(30, 20, width - 60, height - 40);
+
+            // Solar Panels on Roof
+            if (solar) {
+                energyCtx.fillStyle = '#0284c7';
+                for (let i = 0; i < 6; i++) {
+                    energyCtx.fillRect(40 + i * 50, 5, 40, 12);
+                }
+                energyCtx.fillStyle = '#fde047';
+                energyCtx.fillText("SOLAR PV GENERATING CLEAN POWER", 80, 18);
+            }
+
+            // Air-Con Airflow Waves
+            const waveColor = temp >= 25 ? 'rgba(56, 189, 248, 0.4)' : 'rgba(147, 197, 253, 0.9)';
+            energyCtx.fillStyle = waveColor;
+            const time = Date.now() * 0.004;
+            for (let i = 0; i < 15; i++) {
+                const x = 50 + (i * 20) % (width - 100);
+                const y = 40 + Math.sin(time + i) * 12 + (i * 6) % 60;
+                energyCtx.beginPath();
+                energyCtx.arc(x, y, 4, 0, Math.PI * 2);
+                energyCtx.fill();
+            }
+        }
+
+        function checkEnergyMission() {
+            const statusText = document.getElementById('energy-status-tag').innerText;
+            if (statusText.includes("Super Green Champion") || statusText.includes("Optimal")) {
+                unlockBadge('energy', 'Energy Champion');
+            } else {
+                showToast('Set Air-Con to 25°C, switch to LED, and enable Sensors + Solar!', 'warning');
+            }
+        }
+
+        // ================= BADGE & MODAL SYSTEM =================
+        function unlockBadge(stationKey, badgeName) {
+            if (appState.badges[stationKey]) {
+                showToast(`You have already unlocked the ${badgeName} badge!`, 'info');
+                return;
+            }
+
+            appState.badges[stationKey] = true;
+
+            // Update Header Counter
+            const count = Object.values(appState.badges).filter(Boolean).length;
+            document.getElementById('badges-count').innerText = count;
+
+            // Update Station Tab Badge Label
+            const tabTag = document.getElementById(`badge-icon-${stationKey}`);
+            tabTag.className = "text-[10px] bg-yellow-400 text-slate-900 px-1.5 py-0.5 rounded-full font-bold";
+            tabTag.innerText = "Earned!";
+
+            // Update Modal Badge Graphic
+            const modalBadge = document.getElementById(`modal-badge-${stationKey}`);
+            modalBadge.classList.remove('opacity-60', 'border-dashed');
+            modalBadge.classList.add('border-solid', 'border-yellow-400', 'bg-yellow-50/50', 'shadow-md');
+
+            showToast(`🎉 Congratulations! You earned the "${badgeName}" Badge!`, 'success');
+        }
+
+        function openModal(id) {
+            document.getElementById(id).classList.remove('hidden');
+        }
+
+        function closeModal(id) {
+            document.getElementById(id).classList.add('hidden');
+        }
+
+        function showToast(msg, type = 'success') {
+            const toast = document.getElementById('toast-msg');
+            const toastText = document.getElementById('toast-text');
+            const toastIcon = document.getElementById('toast-icon');
+
+            toastText.innerText = msg;
+
+            if (type === 'warning') {
+                toastIcon.className = "fa-solid fa-triangle-exclamation text-amber-400 text-lg";
+            } else if (type === 'info') {
+                toastIcon.className = "fa-solid fa-circle-info text-sky-400 text-lg";
+            } else {
+                toastIcon.className = "fa-solid fa-circle-check text-emerald-400 text-lg";
+            }
+
+            toast.classList.remove('translate-y-20', 'opacity-0', 'pointer-events-none');
+            
+            setTimeout(() => {
+                toast.classList.add('translate-y-20', 'opacity-0', 'pointer-events-none');
+            }, 3500);
+        }
+    </script>
+</body>
+</html>
